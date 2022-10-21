@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { application } = require("express");
 const uuid = require('../helpers/uuid.js');
 const  { readFromFile, writeToFile, readAndAppend } = require("../helpers/fsUtils.js")
-
+const fs = require('fs');
 
 router.get('/notes',(req,res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
@@ -16,7 +16,6 @@ router.post('/notes', (req, res) => {
     if (title && text) {
       // Variable for the object we will save
       const newNote = {
-       
         title,
         text,
         id: uuid(),
@@ -37,13 +36,12 @@ router.post('/notes', (req, res) => {
 
 
   router.delete('/notes/:id', (req, res) => {
-    readFromFile('./db/db.json').then((data) => {
-        let curData = JSON.parse(data);
-
-        let newData = curData.filter((note) => note.id !== req.params.id);
-        console.log(newData);
-        writeToFile('./db/db.json', newData);
-    });
+    let db = JSON.parse(fs.readFileSync('db/db.json'))
+    // removing note with id
+    let deleteNotes = db.filter(newNote => newNote.id !== req.params.id);
+    // Rewriting note to db.json
+    fs.writeFileSync('db/db.json', JSON.stringify(deleteNotes));
+    res.json(deleteNotes);
 });
   
   
