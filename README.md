@@ -11,7 +11,7 @@ This application uses Express.js routing that takes the user from a homepage to 
 
 To launch the project, link on the link below. Type in a title for your note, then type in your note and click on the save button at the top right corner of the screen. This will append the note to the list on the left hand side of the page. 
 
-https://sankyrajeev.github.io/note-taker-
+https://shocking-zombie-29357.herokuapp.com/
 
 ## Usage
 
